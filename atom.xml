@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-08-26T13:52:25.741Z</updated>
+  <updated>2016-08-26T15:42:47.535Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/08/26/kkk/"/>
     <id>http://yoursite.com/2016/08/26/kkk/</id>
     <published>2016-08-26T09:07:39.000Z</published>
-    <updated>2016-08-26T13:52:25.741Z</updated>
+    <updated>2016-08-26T15:42:47.535Z</updated>
     
     <content type="html"><![CDATA[<p>如果你想创建文章摘要用于向读者展示文章的核心内容，那么需要在文章摘要之后其他内容之前添加 HTML 注释标签<br><a id="more"></a></p>
 <p><div class="tip"><br>    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！<br></div></p>
