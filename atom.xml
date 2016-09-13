@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>peipei</title>
+  <title>裴徐泽个人博客</title>
   
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-08-27T03:21:23.607Z</updated>
+  <updated>2016-09-13T01:53:16.261Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,351 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Android滑动到顶部悬停</title>
+    <link href="http://yoursite.com/2016/09/13/Android%E6%BB%91%E5%8A%A8%E5%88%B0%E9%A1%B6%E9%83%A8%E6%82%AC%E5%81%9C/"/>
+    <id>http://yoursite.com/2016/09/13/Android滑动到顶部悬停/</id>
+    <published>2016-09-13T01:38:14.000Z</published>
+    <updated>2016-09-13T01:53:16.261Z</updated>
+    
+    <content type="html"><![CDATA[<p>无图说卵，先上图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2870198-8c189ab8e66dc8af.gif?imageMogr2/auto-orient/strip" alt="jianshu-top.gif"></p>
+<a id="more"></a>
+<p>查阅资料后，发现网上大部分都是用这种方法实现的：<br>多写一个和需要悬浮的部分一模一样的layout，先把浮动区域的可见性设置为gone。当浮动区域滑动到顶部的时候，就把浮动区域B的可见性设置为VISIBLE。这样看起来就像悬浮在顶部不动了。</p>
+<p>具体看下边文章 :</p>
+<p><a href="http://my.oschina.net/u/2352823/blog/467424" target="_blank" rel="external">高仿美团app，浮动layout滑动到顶部悬停效果</a></p>
+<p><a href="http://www.eoeandroid.com/thread-558736-1-1.html" target="_blank" rel="external">Android实例-仿美团app，浮动layout滑动到顶部悬停效果</a></p>
+<p>这里介绍的是另外一种方式：</p>
+<h3 id="使用design包中的控件"><a href="#使用design包中的控件" class="headerlink" title="使用design包中的控件"></a>使用design包中的控件</h3><pre><code>&lt;android.support.design.widget.CoordinatorLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:fitsSystemWindows=&quot;true&quot;
+    tools:context=&quot;com.peipei.app.MainActivity&quot;&gt;
+
+    &lt;android.support.design.widget.AppBarLayout
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;250dp&quot;&gt;
+
+        &lt;android.support.design.widget.CollapsingToolbarLayout
+            app:layout_scrollFlags=&quot;scroll&quot;
+            app:contentScrim=&quot;#000000&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;220dp&quot;&gt;
+
+            &lt;TextView
+                android:text=&quot;banner区域&quot;
+                android:gravity=&quot;center&quot;
+                android:textColor=&quot;#ffffff&quot;
+                android:background=&quot;#987545&quot;
+                android:layout_width=&quot;match_parent&quot;
+                android:layout_height=&quot;220dp&quot;/&gt;
+
+        &lt;/android.support.design.widget.CollapsingToolbarLayout&gt;
+
+        &lt;TextView
+            android:gravity=&quot;center&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;30dp&quot;
+            android:text=&quot;悬浮的部分&quot;/&gt;
+
+     &lt;/android.support.design.widget.AppBarLayout&gt;
+
+     &lt;android.support.v4.widget.NestedScrollView
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;match_parent&quot;
+            app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;&gt;
+
+            &lt;TextView
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:layout_margin=&quot;@dimen/text_margin&quot;
+                android:text=&quot;@string/large_text&quot;/&gt;
+
+      &lt;/android.support.v4.widget.NestedScrollView&gt;
+
+&lt;/android.support.design.widget.CoordinatorLayout&gt;
+</code></pre><h3 id="实现步骤："><a href="#实现步骤：" class="headerlink" title="实现步骤："></a>实现步骤：</h3><ol>
+<li>将需要悬浮的layout放到CollapsingToolbarLayout之外，AppBarLayout之内</li>
+<li>将CollapsingToolbarLayout的app:layout_scrollFlags设置为scroll</li>
+<li>给滚动的NestedScrollView设置<code>app:layout_behavior=&quot;@String/appbar_scrolling_view_behavior&quot;</code>就大功告成了(记得根布局要是CoordinatorLayout)</li>
+</ol>
+<p>最终效果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2870198-c38f6bd5e18df924.gif?imageMogr2/auto-orient/strip" alt="damo-jianshu-top.gif"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;无图说卵，先上图&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/2870198-8c189ab8e66dc8af.gif?imageMogr2/auto-orient/strip&quot; alt=&quot;jianshu-top.gif&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Android" scheme="http://yoursite.com/categories/Android/"/>
+    
+    
+      <category term="Android" scheme="http://yoursite.com/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android Library发布到JCenter</title>
+    <link href="http://yoursite.com/2016/08/28/Android%20Library%E5%8F%91%E5%B8%83%E5%88%B0JCenter/"/>
+    <id>http://yoursite.com/2016/08/28/Android Library发布到JCenter/</id>
+    <published>2016-08-28T13:53:03.000Z</published>
+    <updated>2016-08-30T09:30:08.057Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-Bintray账号"><a href="#1-Bintray账号" class="headerlink" title="1. Bintray账号"></a>1. Bintray账号</h3><p><a href="https://bintray.com/" target="_blank" rel="external">Bintray网站  https://bintray.com/</a>(需要翻墙)<br>1.1 先注册账号(傻瓜式，非职业选手也能搞定)</p>
+<a id="more"></a>  
+<p>1.2 然后登陆账号<br>1.3 点击your profile<br><img src="http://upload-images.jianshu.io/upload_images/2870198-04041fcd26bcfb93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>1.4 点击Edit<br><img src="http://upload-images.jianshu.io/upload_images/2870198-88356a74706a5e98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"></p>
+<p>1.5 点击API Key<br><img src="http://upload-images.jianshu.io/upload_images/2870198-9014f50c689d47d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.png"></p>
+<p>1.6 将key复制下来保存，后边要用，然后回到网站首页<br><img src="http://upload-images.jianshu.io/upload_images/2870198-24c810a65e8a95b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4.png"></p>
+<p>1.7 点击Add，建立仓库<br><img src="http://upload-images.jianshu.io/upload_images/2870198-b5ee2280636c5b27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="5.png"></p>
+<p>1.8 填写信息，type选maven，其他随便写，然后create，之后会自己调到仓库页面<br><img src="http://upload-images.jianshu.io/upload_images/2870198-7a04308b353401d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="6.png"></p>
+<p>1.9 点击Add New Package创建Package<br><img src="http://upload-images.jianshu.io/upload_images/2870198-6db98b23c2591b27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="7.png"></p>
+<p>1.10 填写内容，带*为必填项，点击Create Package<br><img src="http://upload-images.jianshu.io/upload_images/2870198-1d6580ab107e7d44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="8.png"></p>
+<p>1.11 点开Package后页面如下就ok了<br><img src="http://upload-images.jianshu.io/upload_images/2870198-39853224b3eff8a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="9.png"></p>
+<h3 id="2-发布前配置信息"><a href="#2-发布前配置信息" class="headerlink" title="2. 发布前配置信息"></a>2. 发布前配置信息</h3><p>2.1 在项目根目录的 local.properties 文件中添加 Bintray 的账号信息：</p>
+<pre><code>bintray.user=用户名
+bintray.apikey=第一步获取到的API key
+</code></pre><p>2.2 在Project的build.gradle配置插件依赖</p>
+<pre><code>buildscript {    
+    dependencies {        
+        classpath &apos;com.android.tools.build:gradle:2.1.3&apos;                 
+        classpath &apos;com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0&apos;  
+        classpath &apos;com.github.dcendents:android-maven-gradle-plugin:1.4.1&apos;   
+    }
+}
+</code></pre><p>这里要说一下遇到的坑，原来’com.github.dcendents:android-maven-gradle-plugin:1.4.1’写的是1.3<br>执行的时候出现  Noservice of type Factory available in ProjectScopeServices<br>在<a href="http://stackoverflow.com/questions/38825451/no-service-of-type-factory-available-in-projectscopeservices" target="_blank" rel="external">这里找到解决办法</a>，貌似是AS版本问题</p>
+<p>2.3 在model的build.gradle配置</p>
+<pre><code>apply plugin: &apos;com.android.library&apos;
+apply plugin: &apos;com.github.dcendents.android-maven&apos;
+apply plugin: &apos;com.jfrog.bintray&apos;
+
+version = &quot;0.0.4&quot;
+group = &quot;com.peipei.ptool&quot;
+def siteUrl = &apos;https://github.com/yadav-rahul/TastyToast&apos; 
+def gitUrl = &apos;https://github.com/yadav-rahul/TastyToast.git&apos;
+//compile &apos;com.facebook.rebound:rebound:0.3.8&apos;
+//这里的version就是上边rebound后边的版本号
+//group就是com.facebook.rebound
+//siteUrl 项目主页
+//gitUrl 项目的git地址
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion &quot;24.0.0&quot;
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 24
+        versionCode 4
+        versionName &quot;1.0&quot;
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;
+         }
+     }
+}
+
+dependencies {
+    compile fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])
+    testCompile &apos;junit:junit:4.12&apos;
+    compile &apos;com.android.support:appcompat-v7:24.1.1&apos;
+    compile &apos;com.facebook.rebound:rebound:0.3.8
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging &apos;aar&apos;// 打包的类型
+                name &apos;ptool&apos;//项目名称
+                description &apos;描述&apos;// 项目的描述
+                url siteUrl// 项目的主页
+                // 配置开源证书信息
+                licenses {
+                    license {
+                        name &apos;The Apache software License, Version 2.0&apos;
+                        url &apos;http://www.apache.org/licenses/LICENSE-2.0.txt&apos;
+                    }
+                }
+                // 配置开发者信息
+                developers {
+                    developer {
+                        id &apos;&apos;
+                        name &apos;peipei&apos;
+                        email &apos;****@gmail.com&apos;
+                     }
+                }
+                // 软件配置管理信息
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                 }
+             }
+        }
+    }
+}
+//生成对应的source.jar
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = &apos;sources&apos;
+}
+//生成java doc文件
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    failOnError false
+    // 忽略注释语法错误，如果用jdk1.8你的注释写的不规范就编译不过。
+}
+//生成对应的javadoc.jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = &apos;javadoc&apos;
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+// 读取配置的bintray用户的信息
+Properties properties = new Properties()
+properties.load(project.rootProject.file(&apos;local.properties&apos;).newDataInputStream())
+// 配置bintray的信息
+bintray {
+    user = properties.getProperty(&quot;bintray.user&quot;)
+    key = properties.getProperty(&quot;bintray.apikey&quot;)
+    configurations = [&apos;archives&apos;]
+    pkg {
+        repo = &quot;***&quot;//在bintray上边建立的仓库名字
+        name = &quot;****&quot;//在bintray上Package名字
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        labels = [&apos;android&apos;] // 设置标签
+        licenses = [&quot;Apache-2.0&quot;]
+        publish = true
+    }
+}
+//javadoc生成的时候使用GBK编码，而项目使用的UTF-8编码。就需要加入以下代码
+javadoc {
+    options{
+        encoding &apos;UTF-8&apos;
+        charSet &apos;UTF-8&apos;
+        author true
+    }
+}
+</code></pre><p>配置完成后调用 Gradle 命令上传即可：<br>Terminal 输入 gradlew bintrayUpload</p>
+<h3 id="3-同步到JCenter"><a href="#3-同步到JCenter" class="headerlink" title="3. 同步到JCenter"></a>3. 同步到JCenter</h3><p><img src="http://upload-images.jianshu.io/upload_images/2870198-18524eabdcb3e374.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="10.png"></p>
+<p>点击Add to JCenter，等审核通过就可以用了</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2870198-4399f72e721976f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="11.png"></p>
+<p>在Package页面可以找到 compile ‘com.peipei.ptool:ptool:1.0.0’<br><img src="http://upload-images.jianshu.io/upload_images/2870198-15cb211224e5eabf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="12.png"></p>
+<p>这样就将library传到了JCenter</p>
+<h3 id="4-可能的坑"><a href="#4-可能的坑" class="headerlink" title="4. 可能的坑"></a>4. 可能的坑</h3><ol>
+<li><p>HTTP/1.1 409 Conflict<br>版本存在</p>
+</li>
+<li><p>java.net.SocketException: Software caused connection abort: socket write error<br>翻墙吧</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-Bintray账号&quot;&gt;&lt;a href=&quot;#1-Bintray账号&quot; class=&quot;headerlink&quot; title=&quot;1. Bintray账号&quot;&gt;&lt;/a&gt;1. Bintray账号&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://bintray.com/&quot;&gt;Bintray网站  https://bintray.com/&lt;/a&gt;(需要翻墙)&lt;br&gt;1.1 先注册账号(傻瓜式，非职业选手也能搞定)&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Android studio 与 aar jar</title>
+    <link href="http://yoursite.com/2016/08/28/Android-studio-%E4%B8%8E-aar-jar/"/>
+    <id>http://yoursite.com/2016/08/28/Android-studio-与-aar-jar/</id>
+    <published>2016-08-28T04:31:08.000Z</published>
+    <updated>2016-08-28T10:15:22.998Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li>jar是java字节码文件(class文件)的归档文件</li>
+<li>aar是Android中特有的归档文件，与jar最大区别是包含Android的资源文件等</li>
+</ul>
+<a id="more"></a>
+<p> 下边看一张aar的解压缩图片<br><img src="/images/aar.png" alt=""></p>
+<p>那么大家关心的aar文件是如何生成的呢？</p>
+<h3 id="打包aar文件"><a href="#打包aar文件" class="headerlink" title="打包aar文件"></a>打包aar文件</h3><p>要输出aar： 必须将Module配置为library，Module的gradle文件第一行</p>
+<pre><code>apply plugin: &apos;com.android.library&apos;
+</code></pre><p>如果是输出apk： gradle第一行</p>
+<pre><code>apply plugin: &apos;com.android.application&apos;
+</code></pre><ol>
+<li>第一种方式 在Android studio中选中Module，Build&gt;Rebuild Project,就可以在build&gt;outputs&gt;aar下找见aar文件了</li>
+<li>第二种方式 新建Module，完成代码后，编译这个Module，即可生成aar文件</li>
+</ol>
+<h3 id="打包jar文件"><a href="#打包jar文件" class="headerlink" title="打包jar文件"></a>打包jar文件</h3><ol>
+<li>第一种方式 使用gradle脚本实现</li>
+</ol>
+<p>项目build.gradle中增加一个Jar任务</p>
+<pre><code>task buildJar(type: Jar) {
+    appendix = &quot;demo&quot;
+    baseName = &quot;androidJar&quot;
+    version = &quot;1.0.0&quot;
+    classifier = &quot;release&quot;
+    //后缀名
+    extension = &quot;jar&quot;
+    //最终的 Jar 包名，如果没设置，默认为 [baseName]-[appendix]-[version]-[classifier].[extension]
+    archiveName = &quot;JarDemo.jar&quot;
+    //需打包的资源所在的路径集
+    def srcClassDir = [project.buildDir.absolutePath + &quot;/intermediates/classes/release&quot;];
+    //初始化资源路径集
+    from srcClassDir
+    //去除路径集下部分的资源
+//    exclude &quot;com/peipei/ptool/Image.class&quot;
+//    exclude &quot;**/R.class&quot;
+//    exclude &quot;**/R\$*.class&quot;
+//只导入资源路径集下的部分资源
+//    include &quot;com/peipei/ptool/jar/**/*.class&quot;
+//注: exclude include 支持可变长参数
+}
+</code></pre><p>在Terminal中键入gradlew buildJar 回车  然后再build&gt;libs中可以找到JarDemo.jar</p>
+<ol>
+<li>第二种方式 和打包aar的第二种方法一样</li>
+</ol>
+<h3 id="引用aar"><a href="#引用aar" class="headerlink" title="引用aar"></a>引用aar</h3><p>复制aar到lib目录中</p>
+<p>在app的build.gradle中加入</p>
+<pre><code>repositories {
+    flatDir {
+        dirs &apos;libs&apos;
+    }
+}
+dependencies {
+    compile(name: &apos;HouyiLib_v1.0.1&apos;, ext: &apos;aar&apos;)
+ }
+</code></pre><p>HouyiLib_v1.0.1为aar文件名字</p>
+<h3 id="引用jar"><a href="#引用jar" class="headerlink" title="引用jar"></a>引用jar</h3><p>这个就不说了，大家都知道的</p>
+<p>参考 <a href="http://www.jianshu.com/p/32cdfd323c56" target="_blank" rel="external">可能是最通用全面的Android studio打包jar方法</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;jar是java字节码文件(class文件)的归档文件&lt;/li&gt;
+&lt;li&gt;aar是Android中特有的归档文件，与jar最大区别是包含Android的资源文件等&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="Android" scheme="http://yoursite.com/categories/Android/"/>
+    
+    
+      <category term="Android" scheme="http://yoursite.com/tags/Android/"/>
+    
+  </entry>
   
   <entry>
     <title>hexo使用</title>

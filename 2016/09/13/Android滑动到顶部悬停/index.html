@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="裴徐泽"><meta name="description" content="无图说卵，先上图"><meta name="keywords" content="Android"><title>Android滑动到顶部悬停 · 裴徐泽个人博客</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/09/13/Android滑动到顶部悬停/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript">var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?Your baidu Analytics ID";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'Your Google Analytics ID', 'auto');
+ga('send', 'pageview');</script></head><body><div id="main"><header><a href="/." class="logo">裴徐泽个人博客</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">首页</a></li><li class="nav-link"><a href="/archives/" target="_self">归档</a></li><li class="nav-link"><a href="/categories/" target="_self">分类</a></li><li class="nav-link"><a href="/tags/" target="_self">标签</a></li><li class="nav-link"><a href="/about/" target="_self">关于</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Android滑动到顶部悬停</h1><span class="post-time">2016年9月13日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">目录</h3><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用design包中的控件"><span class="toc-text">使用design包中的控件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现步骤："><span class="toc-text">实现步骤：</span></a></li></ol></div><div class="post-content"><p>无图说卵，先上图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2870198-8c189ab8e66dc8af.gif?imageMogr2/auto-orient/strip" alt="jianshu-top.gif"></p>
+<a id="more"></a>
+<p>查阅资料后，发现网上大部分都是用这种方法实现的：<br>多写一个和需要悬浮的部分一模一样的layout，先把浮动区域的可见性设置为gone。当浮动区域滑动到顶部的时候，就把浮动区域B的可见性设置为VISIBLE。这样看起来就像悬浮在顶部不动了。</p>
+<p>具体看下边文章 :</p>
+<p><a href="http://my.oschina.net/u/2352823/blog/467424" target="_blank" rel="external">高仿美团app，浮动layout滑动到顶部悬停效果</a></p>
+<p><a href="http://www.eoeandroid.com/thread-558736-1-1.html" target="_blank" rel="external">Android实例-仿美团app，浮动layout滑动到顶部悬停效果</a></p>
+<p>这里介绍的是另外一种方式：</p>
+<h3 id="使用design包中的控件"><a href="#使用design包中的控件" class="headerlink" title="使用design包中的控件"></a>使用design包中的控件</h3><pre><code>&lt;android.support.design.widget.CoordinatorLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:fitsSystemWindows=&quot;true&quot;
+    tools:context=&quot;com.peipei.app.MainActivity&quot;&gt;
+
+    &lt;android.support.design.widget.AppBarLayout
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;250dp&quot;&gt;
+
+        &lt;android.support.design.widget.CollapsingToolbarLayout
+            app:layout_scrollFlags=&quot;scroll&quot;
+            app:contentScrim=&quot;#000000&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;220dp&quot;&gt;
+
+            &lt;TextView
+                android:text=&quot;banner区域&quot;
+                android:gravity=&quot;center&quot;
+                android:textColor=&quot;#ffffff&quot;
+                android:background=&quot;#987545&quot;
+                android:layout_width=&quot;match_parent&quot;
+                android:layout_height=&quot;220dp&quot;/&gt;
+
+        &lt;/android.support.design.widget.CollapsingToolbarLayout&gt;
+
+        &lt;TextView
+            android:gravity=&quot;center&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;30dp&quot;
+            android:text=&quot;悬浮的部分&quot;/&gt;
+
+     &lt;/android.support.design.widget.AppBarLayout&gt;
+
+     &lt;android.support.v4.widget.NestedScrollView
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;match_parent&quot;
+            app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;&gt;
+
+            &lt;TextView
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:layout_margin=&quot;@dimen/text_margin&quot;
+                android:text=&quot;@string/large_text&quot;/&gt;
+
+      &lt;/android.support.v4.widget.NestedScrollView&gt;
+
+&lt;/android.support.design.widget.CoordinatorLayout&gt;
+</code></pre><h3 id="实现步骤："><a href="#实现步骤：" class="headerlink" title="实现步骤："></a>实现步骤：</h3><ol>
+<li>将需要悬浮的layout放到CollapsingToolbarLayout之外，AppBarLayout之内</li>
+<li>将CollapsingToolbarLayout的app:layout_scrollFlags设置为scroll</li>
+<li>给滚动的NestedScrollView设置<code>app:layout_behavior=&quot;@String/appbar_scrolling_view_behavior&quot;</code>就大功告成了(记得根布局要是CoordinatorLayout)</li>
+</ol>
+<p>最终效果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2870198-c38f6bd5e18df924.gif?imageMogr2/auto-orient/strip" alt="damo-jianshu-top.gif"></p>
+</div></article><div class="tags"><a href="/tags/Android/">Android</a></div><div class="paginator"><a href="/2016/08/28/Android Library发布到JCenter/" class="next"><span>下一页</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2016/09/13/Android滑动到顶部悬停/';
+    this.page.identifier = '2016/09/13/Android滑动到顶部悬停/';
+    this.page.title = 'Android滑动到顶部悬停';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p class="power">Powered by <a href="https://hexo.io/">Hexo</a> and Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p><p class="since">&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">裴徐泽</span></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="裴徐泽"><meta name="description" content="1.Bintray账号Bintray网站https://bintray.com/(需要翻墙)1.1先注册账号(傻瓜式，非职业选手也能搞定)"><meta name="keywords" content=""><title>Android Library发布到JCenter · 裴徐泽个人博客</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/08/28/Android Library发布到JCenter/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript">var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?Your baidu Analytics ID";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'Your Google Analytics ID', 'auto');
+ga('send', 'pageview');</script></head><body><div id="main"><header><a href="/." class="logo">裴徐泽个人博客</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">首页</a></li><li class="nav-link"><a href="/archives/" target="_self">归档</a></li><li class="nav-link"><a href="/categories/" target="_self">分类</a></li><li class="nav-link"><a href="/tags/" target="_self">标签</a></li><li class="nav-link"><a href="/about/" target="_self">关于</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Android Library发布到JCenter</h1><span class="post-time">2016年8月28日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">目录</h3><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Bintray账号"><span class="toc-text">1. Bintray账号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-发布前配置信息"><span class="toc-text">2. 发布前配置信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-同步到JCenter"><span class="toc-text">3. 同步到JCenter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-可能的坑"><span class="toc-text">4. 可能的坑</span></a></li></ol></div><div class="post-content"><h3 id="1-Bintray账号"><a href="#1-Bintray账号" class="headerlink" title="1. Bintray账号"></a>1. Bintray账号</h3><p><a href="https://bintray.com/" target="_blank" rel="external">Bintray网站  https://bintray.com/</a>(需要翻墙)<br>1.1 先注册账号(傻瓜式，非职业选手也能搞定)</p>
+<a id="more"></a>  
+<p>1.2 然后登陆账号<br>1.3 点击your profile<br><img src="http://upload-images.jianshu.io/upload_images/2870198-04041fcd26bcfb93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>1.4 点击Edit<br><img src="http://upload-images.jianshu.io/upload_images/2870198-88356a74706a5e98.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"></p>
+<p>1.5 点击API Key<br><img src="http://upload-images.jianshu.io/upload_images/2870198-9014f50c689d47d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.png"></p>
+<p>1.6 将key复制下来保存，后边要用，然后回到网站首页<br><img src="http://upload-images.jianshu.io/upload_images/2870198-24c810a65e8a95b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4.png"></p>
+<p>1.7 点击Add，建立仓库<br><img src="http://upload-images.jianshu.io/upload_images/2870198-b5ee2280636c5b27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="5.png"></p>
+<p>1.8 填写信息，type选maven，其他随便写，然后create，之后会自己调到仓库页面<br><img src="http://upload-images.jianshu.io/upload_images/2870198-7a04308b353401d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="6.png"></p>
+<p>1.9 点击Add New Package创建Package<br><img src="http://upload-images.jianshu.io/upload_images/2870198-6db98b23c2591b27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="7.png"></p>
+<p>1.10 填写内容，带*为必填项，点击Create Package<br><img src="http://upload-images.jianshu.io/upload_images/2870198-1d6580ab107e7d44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="8.png"></p>
+<p>1.11 点开Package后页面如下就ok了<br><img src="http://upload-images.jianshu.io/upload_images/2870198-39853224b3eff8a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="9.png"></p>
+<h3 id="2-发布前配置信息"><a href="#2-发布前配置信息" class="headerlink" title="2. 发布前配置信息"></a>2. 发布前配置信息</h3><p>2.1 在项目根目录的 local.properties 文件中添加 Bintray 的账号信息：</p>
+<pre><code>bintray.user=用户名
+bintray.apikey=第一步获取到的API key
+</code></pre><p>2.2 在Project的build.gradle配置插件依赖</p>
+<pre><code>buildscript {    
+    dependencies {        
+        classpath &apos;com.android.tools.build:gradle:2.1.3&apos;                 
+        classpath &apos;com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0&apos;  
+        classpath &apos;com.github.dcendents:android-maven-gradle-plugin:1.4.1&apos;   
+    }
+}
+</code></pre><p>这里要说一下遇到的坑，原来’com.github.dcendents:android-maven-gradle-plugin:1.4.1’写的是1.3<br>执行的时候出现  Noservice of type Factory available in ProjectScopeServices<br>在<a href="http://stackoverflow.com/questions/38825451/no-service-of-type-factory-available-in-projectscopeservices" target="_blank" rel="external">这里找到解决办法</a>，貌似是AS版本问题</p>
+<p>2.3 在model的build.gradle配置</p>
+<pre><code>apply plugin: &apos;com.android.library&apos;
+apply plugin: &apos;com.github.dcendents.android-maven&apos;
+apply plugin: &apos;com.jfrog.bintray&apos;
+
+version = &quot;0.0.4&quot;
+group = &quot;com.peipei.ptool&quot;
+def siteUrl = &apos;https://github.com/yadav-rahul/TastyToast&apos; 
+def gitUrl = &apos;https://github.com/yadav-rahul/TastyToast.git&apos;
+//compile &apos;com.facebook.rebound:rebound:0.3.8&apos;
+//这里的version就是上边rebound后边的版本号
+//group就是com.facebook.rebound
+//siteUrl 项目主页
+//gitUrl 项目的git地址
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion &quot;24.0.0&quot;
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 24
+        versionCode 4
+        versionName &quot;1.0&quot;
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;
+         }
+     }
+}
+
+dependencies {
+    compile fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])
+    testCompile &apos;junit:junit:4.12&apos;
+    compile &apos;com.android.support:appcompat-v7:24.1.1&apos;
+    compile &apos;com.facebook.rebound:rebound:0.3.8
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging &apos;aar&apos;// 打包的类型
+                name &apos;ptool&apos;//项目名称
+                description &apos;描述&apos;// 项目的描述
+                url siteUrl// 项目的主页
+                // 配置开源证书信息
+                licenses {
+                    license {
+                        name &apos;The Apache software License, Version 2.0&apos;
+                        url &apos;http://www.apache.org/licenses/LICENSE-2.0.txt&apos;
+                    }
+                }
+                // 配置开发者信息
+                developers {
+                    developer {
+                        id &apos;&apos;
+                        name &apos;peipei&apos;
+                        email &apos;****@gmail.com&apos;
+                     }
+                }
+                // 软件配置管理信息
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                 }
+             }
+        }
+    }
+}
+//生成对应的source.jar
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = &apos;sources&apos;
+}
+//生成java doc文件
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    failOnError false
+    // 忽略注释语法错误，如果用jdk1.8你的注释写的不规范就编译不过。
+}
+//生成对应的javadoc.jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = &apos;javadoc&apos;
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+// 读取配置的bintray用户的信息
+Properties properties = new Properties()
+properties.load(project.rootProject.file(&apos;local.properties&apos;).newDataInputStream())
+// 配置bintray的信息
+bintray {
+    user = properties.getProperty(&quot;bintray.user&quot;)
+    key = properties.getProperty(&quot;bintray.apikey&quot;)
+    configurations = [&apos;archives&apos;]
+    pkg {
+        repo = &quot;***&quot;//在bintray上边建立的仓库名字
+        name = &quot;****&quot;//在bintray上Package名字
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        labels = [&apos;android&apos;] // 设置标签
+        licenses = [&quot;Apache-2.0&quot;]
+        publish = true
+    }
+}
+//javadoc生成的时候使用GBK编码，而项目使用的UTF-8编码。就需要加入以下代码
+javadoc {
+    options{
+        encoding &apos;UTF-8&apos;
+        charSet &apos;UTF-8&apos;
+        author true
+    }
+}
+</code></pre><p>配置完成后调用 Gradle 命令上传即可：<br>Terminal 输入 gradlew bintrayUpload</p>
+<h3 id="3-同步到JCenter"><a href="#3-同步到JCenter" class="headerlink" title="3. 同步到JCenter"></a>3. 同步到JCenter</h3><p><img src="http://upload-images.jianshu.io/upload_images/2870198-18524eabdcb3e374.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="10.png"></p>
+<p>点击Add to JCenter，等审核通过就可以用了</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2870198-4399f72e721976f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="11.png"></p>
+<p>在Package页面可以找到 compile ‘com.peipei.ptool:ptool:1.0.0’<br><img src="http://upload-images.jianshu.io/upload_images/2870198-15cb211224e5eabf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="12.png"></p>
+<p>这样就将library传到了JCenter</p>
+<h3 id="4-可能的坑"><a href="#4-可能的坑" class="headerlink" title="4. 可能的坑"></a>4. 可能的坑</h3><ol>
+<li><p>HTTP/1.1 409 Conflict<br>版本存在</p>
+</li>
+<li><p>java.net.SocketException: Software caused connection abort: socket write error<br>翻墙吧</p>
+</li>
+</ol>
+</div></article><div class="tags"></div><div class="paginator"><a href="/2016/09/13/Android滑动到顶部悬停/" class="prev"><i class="iconfont icon-left"></i><span> 上一页</span></a><a href="/2016/08/28/Android-studio-与-aar-jar/" class="next"><span>下一页</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2016/08/28/Android Library发布到JCenter/';
+    this.page.identifier = '2016/08/28/Android Library发布到JCenter/';
+    this.page.title = 'Android Library发布到JCenter';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p class="power">Powered by <a href="https://hexo.io/">Hexo</a> and Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p><p class="since">&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">裴徐泽</span></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>

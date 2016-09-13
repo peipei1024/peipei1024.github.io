@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="裴徐泽"><meta name="description" content="jar是java字节码文件(class文件)的归档文件aar是Android中特有的归档文件，与jar最大区别是包含Android的资源文件等"><meta name="keywords" content="Android"><title>Android studio 与 aar jar · 裴徐泽个人博客</title><link rel="icon" href="/favicon.ico"><link rel="canonical" href="http://yoursite.com/2016/08/28/Android-studio-与-aar-jar/"><link rel="stylesheet" href="/fonts/iconfont/iconfont.css"><link rel="stylesheet" href="/css/style.css"><script type="text/javascript">var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?Your baidu Analytics ID";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'Your Google Analytics ID', 'auto');
+ga('send', 'pageview');</script></head><body><div id="main"><header><a href="/." class="logo">裴徐泽个人博客</a><ul class="nav"><li class="nav-link"><a href="/" target="_self">首页</a></li><li class="nav-link"><a href="/archives/" target="_self">归档</a></li><li class="nav-link"><a href="/categories/" target="_self">分类</a></li><li class="nav-link"><a href="/tags/" target="_self">标签</a></li><li class="nav-link"><a href="/about/" target="_self">关于</a></li></ul></header><section id="container"><article class="post"><h1 class="post-title">Android studio 与 aar jar</h1><span class="post-time">2016年8月28日</span><div id="sidebar" class="post-sidebar"><h3 class="heading">目录</h3><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#打包aar文件"><span class="toc-text">打包aar文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#打包jar文件"><span class="toc-text">打包jar文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用aar"><span class="toc-text">引用aar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引用jar"><span class="toc-text">引用jar</span></a></li></ol></div><div class="post-content"><ul>
+<li>jar是java字节码文件(class文件)的归档文件</li>
+<li>aar是Android中特有的归档文件，与jar最大区别是包含Android的资源文件等</li>
+</ul>
+<a id="more"></a>
+<p> 下边看一张aar的解压缩图片<br><img src="/images/aar.png" alt=""></p>
+<p>那么大家关心的aar文件是如何生成的呢？</p>
+<h3 id="打包aar文件"><a href="#打包aar文件" class="headerlink" title="打包aar文件"></a>打包aar文件</h3><p>要输出aar： 必须将Module配置为library，Module的gradle文件第一行</p>
+<pre><code>apply plugin: &apos;com.android.library&apos;
+</code></pre><p>如果是输出apk： gradle第一行</p>
+<pre><code>apply plugin: &apos;com.android.application&apos;
+</code></pre><ol>
+<li>第一种方式 在Android studio中选中Module，Build&gt;Rebuild Project,就可以在build&gt;outputs&gt;aar下找见aar文件了</li>
+<li>第二种方式 新建Module，完成代码后，编译这个Module，即可生成aar文件</li>
+</ol>
+<h3 id="打包jar文件"><a href="#打包jar文件" class="headerlink" title="打包jar文件"></a>打包jar文件</h3><ol>
+<li>第一种方式 使用gradle脚本实现</li>
+</ol>
+<p>项目build.gradle中增加一个Jar任务</p>
+<pre><code>task buildJar(type: Jar) {
+    appendix = &quot;demo&quot;
+    baseName = &quot;androidJar&quot;
+    version = &quot;1.0.0&quot;
+    classifier = &quot;release&quot;
+    //后缀名
+    extension = &quot;jar&quot;
+    //最终的 Jar 包名，如果没设置，默认为 [baseName]-[appendix]-[version]-[classifier].[extension]
+    archiveName = &quot;JarDemo.jar&quot;
+    //需打包的资源所在的路径集
+    def srcClassDir = [project.buildDir.absolutePath + &quot;/intermediates/classes/release&quot;];
+    //初始化资源路径集
+    from srcClassDir
+    //去除路径集下部分的资源
+//    exclude &quot;com/peipei/ptool/Image.class&quot;
+//    exclude &quot;**/R.class&quot;
+//    exclude &quot;**/R\$*.class&quot;
+//只导入资源路径集下的部分资源
+//    include &quot;com/peipei/ptool/jar/**/*.class&quot;
+//注: exclude include 支持可变长参数
+}
+</code></pre><p>在Terminal中键入gradlew buildJar 回车  然后再build&gt;libs中可以找到JarDemo.jar</p>
+<ol>
+<li>第二种方式 和打包aar的第二种方法一样</li>
+</ol>
+<h3 id="引用aar"><a href="#引用aar" class="headerlink" title="引用aar"></a>引用aar</h3><p>复制aar到lib目录中</p>
+<p>在app的build.gradle中加入</p>
+<pre><code>repositories {
+    flatDir {
+        dirs &apos;libs&apos;
+    }
+}
+dependencies {
+    compile(name: &apos;HouyiLib_v1.0.1&apos;, ext: &apos;aar&apos;)
+ }
+</code></pre><p>HouyiLib_v1.0.1为aar文件名字</p>
+<h3 id="引用jar"><a href="#引用jar" class="headerlink" title="引用jar"></a>引用jar</h3><p>这个就不说了，大家都知道的</p>
+<p>参考 <a href="http://www.jianshu.com/p/32cdfd323c56" target="_blank" rel="external">可能是最通用全面的Android studio打包jar方法</a></p>
+</div></article><div class="tags"><a href="/tags/Android/">Android</a></div><div class="paginator"><a href="/2016/08/28/Android Library发布到JCenter/" class="prev"><i class="iconfont icon-left"></i><span> 上一页</span></a><a href="/2016/08/27/hexo使用/" class="next"><span>下一页</span><i class="iconfont icon-right"></i></a></div><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://yoursite.com/2016/08/28/Android-studio-与-aar-jar/';
+    this.page.identifier = '2016/08/28/Android-studio-与-aar-jar/';
+    this.page.title = 'Android studio 与 aar jar';
+};
+(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//Your disqus ID.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();</script></section><footer><div class="copyright"><p class="power">Powered by <a href="https://hexo.io/">Hexo</a> and Theme by <a href="https://github.com/ahonn/hexo-theme-even"> Even</a></p><p class="since">&copy;2016<span class="heart"><i class="iconfont icon-heart"></i></span><span class="author">裴徐泽</span></p></div><label id="back2top"><i class="iconfont icon-up"></i></label></footer></div><script src="/js/zepto.min.js"></script><script src="/js/theme.js"></script></body></html>
